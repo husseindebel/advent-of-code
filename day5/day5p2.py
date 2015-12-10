@@ -4,37 +4,24 @@ import re
 
 filename = "day5_input"
 nice_string = 0
-vowel = r"[aeiou]"
 
-def check_vowels(line):
-    num_vowels = 0
-    for character in line:
-        if re.match(vowel, character):
-            num_vowels += 1
+def first_condition(string):
+    return re.search(r"([a-z]{2}).*\1{1}", string)
 
-    return num_vowels
-
-def letters_in_row(line):
-    return re.search(r"([a-z])\1{1}", line)
-
-def contains_strings(line):
-    return re.search(r"ab|cd|pq|xy", line)
+def second_condition(string):
+    return re.search(r"([a-z]).{1}\1{1}", string)
 
 with open(filename) as f:
     while True:
         line = f.readline().rstrip()
         if not line:
             break
-        if contains_strings(line):
-            continue
-        else:
-            num_vowels = check_vowels(line)
-            if num_vowels < 3:
-                continue
+        if first_condition(line):
+            if second_condition(line):
+                nice_string += 1
             else:
-                if letters_in_row(line):
-                    nice_string += 1
-                    continue
-                else:
-                    continue
+                continue
+        else:
+            continue
+
 print nice_string
