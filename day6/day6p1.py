@@ -3,7 +3,7 @@
 ### light_board[row][column]
 import re
 
-DIMENSION = 20 ## square board DIMENSIONxDIMENSION
+DIMENSION = 1000 ## square board DIMENSIONxDIMENSION
 ON = 1
 OFF = 0
 TOGGLE = 2

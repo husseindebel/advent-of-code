@@ -3,9 +3,9 @@
 ### light_board[row][column]
 import re
 
-DIMENSION = 20 ## square board DIMENSIONxDIMENSION
-ON = 1
-OFF = 0
+DIMENSION = 1000 ## square board DIMENSIONxDIMENSION
+INCREASE = 1
+DECREASE = -1
 TOGGLE = 2
 
 
@@ -21,12 +21,13 @@ def turn_lights(board, row_start, row_end, col_start, col_end, switch):
         col = int(col_start)
         while col <= int(col_end):
             if switch == 2:
-                if board[row][col] == 1:
-                    board[row][col] = 0
-                elif board[row][col] == 0:
-                    board[row][col] = 1
+                board[row][col] += 2
             else:
-                board[row][col] = switch
+                if switch == 1:
+                    board[row][col] += 1
+                elif switch == -1:
+                    if board[row][col] != 0:
+                        board[row][col] -= 1
             col += 1
         row += 1
 
@@ -48,16 +49,15 @@ with open(filename) as f:
         col_end = pattern.search(instruction).group(5)
 
         if action == "turn off":
-            turn_lights(light_board, row_start, row_end, col_start, col_end, OFF)
+            turn_lights(light_board, row_start, row_end, col_start, col_end, DECREASE)
         if action == "turn on":
-            turn_lights(light_board, row_start, row_end, col_start, col_end, ON)
+            turn_lights(light_board, row_start, row_end, col_start, col_end, INCREASE)
         if action == "toggle":
             turn_lights(light_board, row_start, row_end, col_start, col_end, TOGGLE)
 
-num_lights = 0
+bright_lights = 0
 for row in light_board:
     for light in row:
-        if light == 1:
-            num_lights += 1
+        bright_lights += light
 
-print num_lights
+print bright_lights
